@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spam-V-Ham</title>
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --box-light: #f1f1f1;
+      --primary: #00bcd4;
+      --text: #e0e0e0;
+      --label-dark: #333333;
+      --spam: #e53935;
+      --ham: #43a047;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+  background-color: #1a1a1a;
+  padding: 15px 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 6px rgba(0, 188, 212, 0.2);
+}
+
+nav .brand {
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 25px;
+}
+
+nav ul li a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 12px;
+}
+
+nav ul li a:hover {
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  color: #00ffff;
+}
+
+
+    section {
+      padding: 100px 20px 60px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    h4 {
+      text-align: center;
+      color: #c78dce;
+      font-size: 20px;
+    }
+
+    .form-section {
+      background-color: var(--box-light);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    label {
+      color: var(--label-dark);
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      margin-top: 15px;
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0097a7;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .spam {
+      color: var(--spam);
+    }
+
+    .ham {
+      color: var(--ham);
+    }
+
+    .info-box {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-left: 6px solid var(--primary);
+      color: var(--text);
+    }
+
+    .info-box h3 {
+      margin: 0;
+      color: #c78dce;
+    }
+
+    .info-box p {
+      margin-top: 10px;
+      font-size: 15px;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="brand">Spam-V-Ham</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#importance">Importance</a></li>
+    </ul>
+  </nav>
+
+  <section id="home">
+    <h2>Spam-V-Ham</h2>
+    <h4>Is this email spam or ham?</h4>
+    <form method="POST" action="/predict" class="form-section">
+      <label for="message">Enter your email message:</label>
+      <textarea name="message" placeholder="Type your message here..." required></textarea><br><br>
+      <input type="submit" value="Classify">
+    </form>
+    {% if prediction %}
+    <div class="result">
+      Prediction: <span class="{{ 'spam' if prediction == 'SPAM' else 'ham' }}">{{ prediction }}</span>
+    </div>
+    {% endif %}
+  </section>
+
+  <section id="about">
+    <div class="info-box">
+      <h3>About This Project</h3>
+      <p>
+        This is a project built by an AI student passionate about solving real-world challenges using machine learning.
+        It uses LSTM to classify email messages based on meaning, not just keywords.
+      </p>
+      <p>
+        The goal is to protect inboxes with smarter filtering and help users stay focused and safe.
+      </p>
+    </div>
+  </section>
+
+  <section id="importance">
+    <div class="info-box">
+      <h3>Why It Matters</h3>
+      <p>
+        Spam detection protects users from phishing, scams, and distractions. It’s crucial in today’s digital world.
+      </p>
+      <p>
+        Spam filters ensure secure communication and peace of mind—whether for personal or business use.
+      </p>
+    </div>
+  </section>
+
+</body>
+</html>
