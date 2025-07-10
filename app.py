@@ -5,12 +5,11 @@ import pickle
 
 app = Flask(__name__)
 
-# Load LSTM model and tokenizer
 model = load_model('spam_model.h5')
 with open('tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
 
-MAX_LEN = 100  # Use the same maxlen as used during training
+MAX_LEN = 100
 
 @app.route('/')
 def home():
@@ -19,15 +18,16 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     message = request.form['message']
-
-    # Convert text to padded sequence
     seq = tokenizer.texts_to_sequences([message])
     padded = pad_sequences(seq, maxlen=MAX_LEN)
-
-    # Predict with the LSTM model
     prediction = model.predict(padded)[0][0]
-    result = 'SPAM' if prediction < 0.5 else 'HAM'
 
+    print("Message:", message)
+    print("Tokenized:", seq)
+    print("Padded:", padded)
+    print("Raw prediction:", prediction)
+
+    result = 'SPAM' if prediction > 0.15 else 'HAM'
     return render_template('index.html', prediction=result)
 
 if __name__ == "__main__":
